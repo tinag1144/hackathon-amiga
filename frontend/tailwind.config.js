@@ -8,14 +8,16 @@ export default {
     extend: {
       colors: {
         amiga: {
-          dark: "#073b4c",     // Estructural, títulos, texto principal
-          blue: "#118ab2",     // Acción principal, botones, focos interactivos
-          green: "#06d6a0",    // Estados positivos, métricas favorables
-          yellow: "#ffd166",   // Atención moderada, chips, destacados cálidos
-          pink: "#ef476f",     // Alertas críticas, highlights
-          cream: "#FAF9F5",    // Fondo base marfil cálido
-          card: "#FFFFFF",     // Tarjetas flotantes
-          muted: "#64748b"     // Texto secundario
+          sidebar: "#0d3836",         // Lateral verde esmeralda oscuro (AeuxGlobal style)
+          sidebarActive: "#184e4c",   // Item activo de navegación
+          canvas: "#f2f5f4",          // Fondo principal claro y limpio
+          darkCard: "#0a2e2e",        // Tarjeta oscura de contraste
+          emerald: "#10b981",         // Verde vibrante de indicadores y medidores
+          teal: "#118ab2",            // Acción e interacción
+          dark: "#073b4c",            // Texto principal
+          yellow: "#ffd166",          // Destacados cálidos
+          pink: "#ef476f",            // Alertas críticas
+          muted: "#64748b"
         }
       },
       borderRadius: {
@@ -24,9 +26,8 @@ export default {
         '4xl': '32px'
       },
       boxShadow: {
-        'editorial': '0 12px 36px -8px rgba(7, 59, 76, 0.06), 0 4px 12px -2px rgba(7, 59, 76, 0.03)',
-        'editorial-hover': '0 18px 48px -10px rgba(7, 59, 76, 0.1), 0 6px 16px -2px rgba(7, 59, 76, 0.04)',
-        'chip': '0 2px 8px rgba(7, 59, 76, 0.04)'
+        'dashboard': '0 12px 36px -8px rgba(13, 56, 54, 0.08), 0 4px 12px -2px rgba(13, 56, 54, 0.03)',
+        'card-hover': '0 18px 48px -10px rgba(13, 56, 54, 0.12)',
       },
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']

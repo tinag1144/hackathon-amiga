@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MobileContainer } from './components/Layout/MobileContainer';
-import { TopHeader } from './components/Layout/TopHeader';
 import { BottomNav, NavTab } from './components/Layout/BottomNav';
+import { OverviewDashboard } from './components/Dashboard/OverviewDashboard';
 import { FileUploader } from './components/Ingestion/FileUploader';
 import { DataAuditView } from './components/Audit/DataAuditView';
 import { PipelineFlow } from './components/Pipeline/PipelineFlow';
@@ -14,7 +14,7 @@ import { IngestedAsset, AuditDiagnostic, PrescriptiveDecision, ChatMessage } fro
 import { ApiService } from './services/api';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<NavTab>('ingesta');
+  const [activeTab, setActiveTab] = useState<NavTab>('tablero');
   const [assets, setAssets] = useState<IngestedAsset[]>(INITIAL_ASSETS);
   const [audits, setAudits] = useState<AuditDiagnostic[]>(INITIAL_AUDITS);
   const [decisions, setDecisions] = useState<PrescriptiveDecision[]>(INITIAL_DECISIONS);
@@ -39,10 +39,19 @@ export const App: React.FC = () => {
   };
 
   return (
-    <MobileContainer>
-      <TopHeader />
-
-      <main className={`flex-1 px-3 sm:px-4 pt-2 ${activeTab === 'chat' ? 'overflow-hidden flex flex-col relative' : 'overflow-y-auto'}`}>
+    <MobileContainer
+      activeTab={activeTab}
+      setActiveTab={setActiveTab}
+      decisionAlertCount={decisions.filter(d => d.nivel_alerta === 'RIESGO_CRITICO').length}
+    >
+      <main className={`flex-1 ${activeTab === 'chat' ? 'overflow-hidden flex flex-col relative' : 'overflow-y-auto'}`}>
+        {activeTab === 'tablero' && (
+          <OverviewDashboard
+            decisions={decisions}
+            assets={assets}
+            onNavigateTab={(tab) => setActiveTab(tab)}
+          />
+        )}
         {activeTab === 'ingesta' && (
           <FileUploader assets={assets} onUpload={handleUpload} />
         )}
@@ -72,11 +81,14 @@ export const App: React.FC = () => {
         />
       )}
 
-      <BottomNav
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        decisionAlertCount={decisions.filter(d => d.nivel_alerta === 'RIESGO_CRITICO').length}
-      />
+      {/* BottomNav únicamente activo cuando se visualiza en celular */}
+      <div className="block sm:hidden">
+        <BottomNav
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          decisionAlertCount={decisions.filter(d => d.nivel_alerta === 'RIESGO_CRITICO').length}
+        />
+      </div>
     </MobileContainer>
   );
 };

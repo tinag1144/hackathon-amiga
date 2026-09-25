@@ -1,7 +1,7 @@
 import React from 'react';
-import { UploadCloud, CheckCircle2, Cpu, AlertTriangle, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, UploadCloud, CheckCircle2, Cpu, AlertTriangle, MessageSquare } from 'lucide-react';
 
-export type NavTab = 'ingesta' | 'auditoria' | 'pipeline' | 'decisiones' | 'chat';
+export type NavTab = 'tablero' | 'ingesta' | 'auditoria' | 'pipeline' | 'decisiones' | 'chat';
 
 interface BottomNavProps {
   activeTab: NavTab;
@@ -11,11 +11,12 @@ interface BottomNavProps {
 
 export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab, decisionAlertCount }) => {
   const tabs = [
+    { id: 'tablero' as NavTab, label: 'Inicio', icon: LayoutDashboard },
     { id: 'ingesta' as NavTab, label: 'Ingesta', icon: UploadCloud },
     { id: 'auditoria' as NavTab, label: 'Auditoría', icon: CheckCircle2 },
-    { id: 'pipeline' as NavTab, label: 'Motor 5 Fases', icon: Cpu },
-    { id: 'decisiones' as NavTab, label: 'Decisiones', icon: AlertTriangle, badge: decisionAlertCount },
-    { id: 'chat' as NavTab, label: 'Laya Chat', icon: MessageSquare },
+    { id: 'pipeline' as NavTab, label: 'Motor', icon: Cpu },
+    { id: 'decisiones' as NavTab, label: 'Alertas', icon: AlertTriangle, badge: decisionAlertCount },
+    { id: 'chat' as NavTab, label: 'Chat', icon: MessageSquare },
   ];
 
   return (
@@ -29,9 +30,9 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab, d
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`relative flex items-center gap-1 py-1 px-2.5 rounded-2xl transition-all duration-200 ${
+              className={`relative flex items-center gap-1 py-1 px-2 rounded-2xl transition-all duration-200 ${
                 isActive
-                  ? 'bg-[#118ab2] text-white font-bold shadow-sm'
+                  ? 'bg-[#10b981] text-[#0d3836] font-bold shadow-sm'
                   : 'text-[#073b4c]/70 hover:text-[#073b4c] hover:bg-[#073b4c]/5 font-medium'
               }`}
             >
@@ -43,7 +44,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab, d
                   </span>
                 ) : null}
               </div>
-              <span className="text-[11px] tracking-tight">{tab.label}</span>
+              <span className="text-[10px] tracking-tight">{tab.label}</span>
             </button>
           );
         })}
