@@ -1,5 +1,5 @@
 import React from 'react';
-import { UploadCloud, CheckCircle2, AlertTriangle, MessageSquareHeart } from 'lucide-react';
+import { UploadCloud, CheckCircle2, AlertTriangle, MessageSquare } from 'lucide-react';
 
 export type NavTab = 'ingesta' | 'auditoria' | 'decisiones' | 'chat';
 
@@ -14,7 +14,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ activeTab, setActiveTab, d
     { id: 'ingesta' as NavTab, label: 'Ingesta', icon: UploadCloud },
     { id: 'auditoria' as NavTab, label: 'Auditoría', icon: CheckCircle2 },
     { id: 'decisiones' as NavTab, label: 'Decisiones', icon: AlertTriangle, badge: decisionAlertCount },
-    { id: 'chat' as NavTab, label: 'Laya Chat', icon: MessageSquareHeart },
+    { id: 'chat' as NavTab, label: 'Laya Chat', icon: MessageSquare },
   ];
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, Sparkles, MessageSquare, ExternalLink, Bot, User } from 'lucide-react';
+import { Send, Sparkles, ExternalLink, Bot } from 'lucide-react';
 import { ChatMessage } from '../../types';
 import { ApiService } from '../../services/api';
 

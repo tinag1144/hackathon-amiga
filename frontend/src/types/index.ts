@@ -86,3 +86,14 @@ export interface ChatMessage {
   nivel_alerta?: NivelAlerta;
   timestamp: string;
 }
+
+export interface ChatQuery {
+  pregunta: string;
+}
+
+export interface ChatResponse {
+  respuesta: string;
+  archivos_citados: string[];
+  nivel_alerta_asociado?: NivelAlerta;
+  fecha_respuesta: string;
+}

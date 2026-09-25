@@ -1,5 +1,5 @@
-import { IngestedAsset, AuditDiagnostic, PrescriptiveDecision, ChatQuery, ChatResponse } from '../types';
-import { INITIAL_ASSETS, INITIAL_AUDITS, INITIAL_DECISIONS, INITIAL_CHAT } from '../mock/mockData';
+import { IngestedAsset, PrescriptiveDecision, ChatResponse } from '../types';
+import { INITIAL_DECISIONS } from '../mock/mockData';
 
 const API_BASE = '/api';
 
@@ -49,7 +49,7 @@ export const ApiService = {
       if (!res.ok) throw new Error("API Offline");
       return await res.json();
     } catch {
-      const q = query.lowerCase ? query.toLowerCase() : query;
+      const q = query ? query.toLowerCase() : '';
       let respText = "Analicé tus archivos con **Laya**. No detecté discrepancias graves en esta consulta, pero la harina y el aceite requieren actualización de precio de venta en mostrador.";
       let citas = ["Lista_Precios_Distribuidora_El_Sol.csv", "Cuaderno_Ventas_Septiembre.csv"];
       let alerta: any = "ADVERTENCIA";

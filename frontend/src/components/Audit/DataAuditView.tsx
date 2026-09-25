@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, AlertCircle, Clock, CheckCircle2, FileCheck } from 'lucide-react';
+import { ShieldCheck, AlertCircle, Clock, FileCheck } from 'lucide-react';
 import { AuditDiagnostic } from '../../types';
 
 interface DataAuditViewProps {
