@@ -3,6 +3,7 @@ import { StatusBar } from './StatusBar';
 import { HomeIndicator } from './HomeIndicator';
 import { Smartphone, Monitor } from 'lucide-react';
 import { Sidebar, NavTab } from './Sidebar';
+import { BottomNav } from './BottomNav';
 
 interface MobileContainerProps {
   children: React.ReactNode;
@@ -35,7 +36,8 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({ children, acti
             }`}
           >
             <Monitor className="w-3.5 h-3.5" />
-            <span>Escritorio PC</span>
+            <span className="hidden sm:inline">Escritorio PC</span>
+            <span className="inline sm:hidden">PC</span>
           </button>
           
           <button
@@ -47,14 +49,15 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({ children, acti
             }`}
           >
             <Smartphone className="w-3.5 h-3.5" />
-            <span>Simulador Celular</span>
+            <span className="hidden sm:inline">Simulador Celular</span>
+            <span className="inline sm:hidden">Celular</span>
           </button>
         </div>
       </div>
 
       {/* RENDER MODO 1: SIMULADOR DE CELULAR CENTRADO */}
       {isPhoneMockup ? (
-        <div className="relative w-full max-w-[360px] h-[710px] max-h-[86vh] bg-[#1a232a] rounded-[46px] p-[8px] shadow-[0_25px_60px_-15px_rgba(7,59,76,0.4)] border-4 border-[#073b4c]/20 flex flex-col overflow-hidden transition-all duration-300">
+        <div className="relative w-full max-w-[380px] h-[730px] max-h-[88vh] bg-[#1a232a] rounded-[46px] p-[8px] shadow-[0_25px_60px_-15px_rgba(7,59,76,0.4)] border-4 border-[#073b4c]/20 flex flex-col overflow-hidden transition-all duration-300">
           
           {/* Side hardware buttons */}
           <div className="absolute -left-[14px] top-20 w-[4px] h-8 bg-[#073b4c] rounded-l-md" />
@@ -64,26 +67,42 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({ children, acti
           {/* Inner Phone Screen */}
           <div className="w-full h-full bg-[#FAF9F5] rounded-[38px] flex flex-col relative overflow-hidden shadow-inner border border-[#073b4c]/5">
             <StatusBar />
-            <div className="flex-1 flex flex-col overflow-hidden relative">
+            <div className="flex-1 flex flex-col overflow-hidden relative pb-14">
               {children}
             </div>
+            <BottomNav
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              decisionAlertCount={decisionAlertCount}
+            />
             <HomeIndicator />
           </div>
         </div>
       ) : (
-        /* RENDER MODO 2: DASHBOARD ESCRITORIO CON SIDEBAR VERDE ESMERALDA (Estilo AeuxGlobal) */
-        <div className="w-full max-w-6xl bg-[#f2f5f4] rounded-3xl sm:rounded-4xl shadow-2xl border border-[#073b4c]/10 flex overflow-hidden min-h-[82vh] max-h-[88vh] relative transition-all duration-300">
+        /* RENDER MODO 2: DASHBOARD ESCRITORIO CON SIDEBAR / RESPONSIVO REAL */
+        <div className="w-full max-w-6xl bg-[#f2f5f4] rounded-3xl sm:rounded-4xl shadow-2xl border border-[#073b4c]/10 flex flex-col md:flex-row overflow-hidden min-h-[82vh] max-h-[88vh] relative transition-all duration-300">
           
-          {/* Sidebar Lateral Verde Esmeralda */}
-          <Sidebar
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            decisionAlertCount={decisionAlertCount}
-          />
+          {/* Sidebar Lateral (Visible en escritorio / pantallas medianas) */}
+          <div className="hidden md:block">
+            <Sidebar
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              decisionAlertCount={decisionAlertCount}
+            />
+          </div>
 
           {/* Main Content Area */}
-          <div className="flex-1 flex flex-col relative overflow-hidden p-5 bg-[#f2f5f4]">
+          <div className="flex-1 flex flex-col relative overflow-hidden p-3 sm:p-5 bg-[#f2f5f4] pb-16 md:pb-5">
             {children}
+          </div>
+
+          {/* BottomNav únicamente activo en pantallas chicas reales cuando no se usa el mockup (md:hidden) */}
+          <div className="block md:hidden">
+            <BottomNav
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              decisionAlertCount={decisionAlertCount}
+            />
           </div>
         </div>
       )}
