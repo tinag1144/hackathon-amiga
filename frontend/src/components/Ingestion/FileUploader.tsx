@@ -36,15 +36,15 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
       )}
 
       {/* Intro Banner Editorial */}
-      <div className="bg-white rounded-3xl p-4 shadow-editorial border border-[#073b4c]/5 relative overflow-hidden">
+      <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-editorial border border-[#073b4c]/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffd166]/15 rounded-full blur-2xl -mr-10 -mt-10" />
         <span className="inline-block px-2.5 py-0.5 bg-[#ffd166]/25 text-[#073b4c] text-[10px] font-bold rounded-full mb-2">
           Fase 1 • Centralización de Archivos
         </span>
-        <h2 className="text-base font-bold text-[#073b4c] tracking-tight">
+        <h2 className="text-base sm:text-lg font-bold text-[#073b4c] tracking-tight">
           El "Basurero" de Archivos
         </h2>
-        <p className="text-[11px] text-[#073b4c]/70 mt-0.5 leading-relaxed">
+        <p className="text-[11px] sm:text-xs text-[#073b4c]/70 mt-0.5 leading-relaxed max-w-2xl">
           Arrastrá todo lo que tengas suelto: PDFs de mayoristas, fotos de remitos, Excel o textos de WhatsApp.
         </p>
       </div>
@@ -62,7 +62,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
             showToast(`Documento '${f.name}' ingestado por Laya`);
           }
         }}
-        className={`block cursor-pointer bg-white rounded-3xl p-5 text-center transition-all duration-300 border-2 border-dashed shadow-editorial ${
+        className={`block cursor-pointer bg-white rounded-3xl p-5 sm:p-6 text-center transition-all duration-300 border-2 border-dashed shadow-editorial ${
           isDragging
             ? 'border-[#118ab2] bg-[#118ab2]/5 scale-[0.99]'
             : 'border-[#073b4c]/15 hover:border-[#118ab2]/50 hover:bg-[#FAF9F5]'
@@ -72,18 +72,18 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
         <div className="w-10 h-10 bg-[#118ab2]/10 rounded-2xl flex items-center justify-center mx-auto mb-2 text-[#118ab2]">
           <UploadCloud className="w-5 h-5" />
         </div>
-        <h3 className="text-xs font-bold text-[#073b4c]">
+        <h3 className="text-xs sm:text-sm font-bold text-[#073b4c]">
           Soltá tus documentos o tocá para explorar
         </h3>
-        <p className="text-[10px] text-[#073b4c]/50 mt-0.5">
+        <p className="text-[10px] sm:text-xs text-[#073b4c]/50 mt-0.5">
           PDFs, Excel (XLSX/CSV), notas de WhatsApp o imágenes
         </p>
-        <span className="inline-flex items-center gap-1.5 mt-2.5 text-[10px] font-bold text-[#118ab2] bg-[#118ab2]/10 px-3 py-1 rounded-full">
+        <span className="inline-flex items-center gap-1.5 mt-2.5 text-[10px] sm:text-xs font-bold text-[#118ab2] bg-[#118ab2]/10 px-3.5 py-1.5 rounded-full">
           Cargar nuevo documento <ArrowRight className="w-3 h-3" />
         </span>
       </label>
 
-      {/* Lista de Fuentes Ingeridas */}
+      {/* Lista de Fuentes Ingeridas (Grid 1 o 2 cols) */}
       <div>
         <div className="flex items-center justify-between mb-2 px-1">
           <h3 className="text-[10px] font-bold text-[#073b4c] uppercase tracking-wider">
@@ -94,12 +94,12 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
           </span>
         </div>
 
-        <div className="space-y-2.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {assets.map((asset) => (
             <div
               key={asset.id}
               onClick={() => setSelectedAsset(asset)}
-              className="bg-white rounded-3xl p-3.5 shadow-editorial border border-[#073b4c]/5 hover:shadow-editorial-hover transition-all duration-200 cursor-pointer"
+              className="bg-white rounded-3xl p-3.5 shadow-editorial border border-[#073b4c]/5 hover:shadow-editorial-hover transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-2.5"
             >
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
@@ -120,7 +120,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
               </div>
 
               {/* Taxonomía Asignada */}
-              <div className="mt-2 pt-2 border-t border-[#073b4c]/5 flex flex-wrap gap-1">
+              <div className="pt-2 border-t border-[#073b4c]/5 flex flex-wrap gap-1">
                 <span className="text-[9px] font-medium bg-[#073b4c]/5 text-[#073b4c] px-2 py-0.5 rounded-full flex items-center gap-1 truncate max-w-[170px]">
                   <Tag className="w-2.5 h-2.5 text-[#118ab2] shrink-0" /> {asset.fuente_informacion}
                 </span>
@@ -136,7 +136,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
       {/* Modal de Inspección de Archivo */}
       {selectedAsset && (
         <div className="fixed inset-0 z-50 bg-[#073b4c]/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-5 max-w-xs w-full shadow-editorial border border-[#073b4c]/10 animate-in fade-in zoom-in duration-200">
+          <div className="bg-white rounded-3xl p-5 max-w-sm w-full shadow-editorial border border-[#073b4c]/10 animate-in fade-in zoom-in duration-200">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#118ab2] bg-[#118ab2]/10 px-2.5 py-1 rounded-full">
                 Inspección de Fuente (Fase 1)
