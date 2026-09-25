@@ -26,7 +26,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
   };
 
   return (
-    <div className="space-y-5 pb-24">
+    <div className="space-y-4 pb-20">
       {/* Notification Toast */}
       {toastMessage && (
         <div className="fixed top-14 left-1/2 -translate-x-1/2 z-50 bg-[#06d6a0] text-[#073b4c] font-bold text-xs px-4 py-2.5 rounded-full shadow-lg border border-white/40 flex items-center gap-2 animate-bounce">
@@ -36,16 +36,16 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
       )}
 
       {/* Intro Banner Editorial */}
-      <div className="bg-white rounded-3xl p-5 shadow-editorial border border-[#073b4c]/5 relative overflow-hidden">
+      <div className="bg-white rounded-3xl p-4 shadow-editorial border border-[#073b4c]/5 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#ffd166]/15 rounded-full blur-2xl -mr-10 -mt-10" />
-        <span className="inline-block px-3 py-1 bg-[#ffd166]/25 text-[#073b4c] text-[11px] font-bold rounded-full mb-2.5">
+        <span className="inline-block px-2.5 py-0.5 bg-[#ffd166]/25 text-[#073b4c] text-[10px] font-bold rounded-full mb-2">
           Fase 1 • Centralización de Archivos
         </span>
-        <h2 className="text-lg font-bold text-[#073b4c] tracking-tight">
+        <h2 className="text-base font-bold text-[#073b4c] tracking-tight">
           El "Basurero" de Archivos
         </h2>
-        <p className="text-xs text-[#073b4c]/70 mt-0.5 leading-relaxed">
-          Arrastrá todo lo que tengas suelto: PDFs de mayoristas, fotos de remitos, Excel o textos de WhatsApp. AMIGA lo unifica sin exigir formato.
+        <p className="text-[11px] text-[#073b4c]/70 mt-0.5 leading-relaxed">
+          Arrastrá todo lo que tengas suelto: PDFs de mayoristas, fotos de remitos, Excel o textos de WhatsApp.
         </p>
       </div>
 
@@ -62,68 +62,69 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
             showToast(`Documento '${f.name}' ingestado por Laya`);
           }
         }}
-        className={`block cursor-pointer bg-white rounded-3xl p-7 text-center transition-all duration-300 border-2 border-dashed shadow-editorial ${
+        className={`block cursor-pointer bg-white rounded-3xl p-5 text-center transition-all duration-300 border-2 border-dashed shadow-editorial ${
           isDragging
             ? 'border-[#118ab2] bg-[#118ab2]/5 scale-[0.99]'
             : 'border-[#073b4c]/15 hover:border-[#118ab2]/50 hover:bg-[#FAF9F5]'
         }`}
       >
         <input type="file" className="hidden" onChange={handleFileChange} accept=".csv,.xlsx,.pdf,.txt,.jpg,.png" />
-        <div className="w-12 h-12 bg-[#118ab2]/10 rounded-2xl flex items-center justify-center mx-auto mb-3 text-[#118ab2]">
-          <UploadCloud className="w-6 h-6" />
+        <div className="w-10 h-10 bg-[#118ab2]/10 rounded-2xl flex items-center justify-center mx-auto mb-2 text-[#118ab2]">
+          <UploadCloud className="w-5 h-5" />
         </div>
         <h3 className="text-xs font-bold text-[#073b4c]">
           Soltá tus documentos o tocá para explorar
         </h3>
-        <p className="text-[11px] text-[#073b4c]/50 mt-0.5">
+        <p className="text-[10px] text-[#073b4c]/50 mt-0.5">
           PDFs, Excel (XLSX/CSV), notas de WhatsApp o imágenes
         </p>
-        <span className="inline-flex items-center gap-1.5 mt-3 text-[11px] font-bold text-[#118ab2] bg-[#118ab2]/10 px-3.5 py-1.5 rounded-full">
+        <span className="inline-flex items-center gap-1.5 mt-2.5 text-[10px] font-bold text-[#118ab2] bg-[#118ab2]/10 px-3 py-1 rounded-full">
           Cargar nuevo documento <ArrowRight className="w-3 h-3" />
         </span>
       </label>
 
       {/* Lista de Fuentes Ingeridas */}
       <div>
-        <div className="flex items-center justify-between mb-2.5 px-1">
-          <h3 className="text-[11px] font-bold text-[#073b4c] uppercase tracking-wider">
+        <div className="flex items-center justify-between mb-2 px-1">
+          <h3 className="text-[10px] font-bold text-[#073b4c] uppercase tracking-wider">
             Fuentes Ingeridas ({assets.length})
           </h3>
-          <span className="text-[11px] text-[#06d6a0] font-semibold flex items-center gap-1">
-            <CheckCircle className="w-3.5 h-3.5" /> Autoclasificadas
+          <span className="text-[10px] text-[#06d6a0] font-semibold flex items-center gap-1">
+            <CheckCircle className="w-3 h-3" /> Clasificadas
           </span>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {assets.map((asset) => (
             <div
               key={asset.id}
               onClick={() => setSelectedAsset(asset)}
-              className="bg-white rounded-3xl p-4 shadow-editorial border border-[#073b4c]/5 hover:shadow-editorial-hover transition-all duration-200 cursor-pointer"
+              className="bg-white rounded-3xl p-3.5 shadow-editorial border border-[#073b4c]/5 hover:shadow-editorial-hover transition-all duration-200 cursor-pointer"
             >
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-2xl bg-[#073b4c]/5 flex items-center justify-center text-[#073b4c]">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                  <div className="w-8 h-8 rounded-2xl bg-[#073b4c]/5 flex items-center justify-center text-[#073b4c] shrink-0">
                     <FileText className="w-4 h-4" />
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#073b4c] line-clamp-1">{asset.filename}</h4>
-                    <p className="text-[10px] text-[#073b4c]/50 flex items-center gap-1 mt-0.5">
-                      <Clock className="w-3 h-3" /> {asset.upload_timestamp}
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs font-bold text-[#073b4c] truncate">{asset.filename}</h4>
+                    <p className="text-[9px] text-[#073b4c]/50 flex items-center gap-1 mt-0.5 truncate">
+                      <Clock className="w-2.5 h-2.5 shrink-0" /> {asset.upload_timestamp}
                     </p>
                   </div>
                 </div>
-                <button className="text-[10px] font-bold px-2 py-1 bg-[#118ab2]/10 text-[#118ab2] rounded-full flex items-center gap-1 hover:bg-[#118ab2]/20">
-                  <Eye className="w-3 h-3" /> Inspeccionar
+                
+                <button className="shrink-0 text-[9px] font-bold px-2 py-1 bg-[#118ab2]/10 text-[#118ab2] rounded-full flex items-center gap-1 hover:bg-[#118ab2]/20">
+                  <Eye className="w-3 h-3" /> Ver
                 </button>
               </div>
 
               {/* Taxonomía Asignada */}
-              <div className="mt-2.5 pt-2.5 border-t border-[#073b4c]/5 flex flex-wrap gap-1.5">
-                <span className="text-[10px] font-medium bg-[#073b4c]/5 text-[#073b4c] px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                  <Tag className="w-3 h-3 text-[#118ab2]" /> {asset.fuente_informacion}
+              <div className="mt-2 pt-2 border-t border-[#073b4c]/5 flex flex-wrap gap-1">
+                <span className="text-[9px] font-medium bg-[#073b4c]/5 text-[#073b4c] px-2 py-0.5 rounded-full flex items-center gap-1 truncate max-w-[170px]">
+                  <Tag className="w-2.5 h-2.5 text-[#118ab2] shrink-0" /> {asset.fuente_informacion}
                 </span>
-                <span className="text-[10px] font-medium bg-[#ffd166]/20 text-[#073b4c] px-2.5 py-0.5 rounded-full">
+                <span className="text-[9px] font-medium bg-[#ffd166]/20 text-[#073b4c] px-2 py-0.5 rounded-full truncate max-w-[130px]">
                   {asset.tipo_economico}
                 </span>
               </div>
@@ -148,7 +149,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
               </button>
             </div>
 
-            <h3 className="text-xs font-bold text-[#073b4c] mb-1">
+            <h3 className="text-xs font-bold text-[#073b4c] mb-1 break-words">
               {selectedAsset.filename}
             </h3>
             <p className="text-[10px] text-[#073b4c]/60 mb-3">
@@ -166,7 +167,7 @@ export const FileUploader: React.FC<FileUploaderProps> = ({ assets, onUpload }) 
               </div>
               <div className="flex justify-between text-[10px]">
                 <span className="text-[#073b4c]/60">Fuente Identificada:</span>
-                <span className="font-bold text-[#118ab2]">{selectedAsset.fuente_informacion}</span>
+                <span className="font-bold text-[#118ab2] truncate max-w-[150px] text-right">{selectedAsset.fuente_informacion}</span>
               </div>
               <div className="flex justify-between text-[10px]">
                 <span className="text-[#073b4c]/60">Tipo Económico:</span>
