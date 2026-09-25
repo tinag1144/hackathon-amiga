@@ -80,7 +80,7 @@ export const MobileContainer: React.FC<MobileContainerProps> = ({ children, acti
         </div>
       ) : (
         /* RENDER MODO 2: DASHBOARD ESCRITORIO CON SIDEBAR / RESPONSIVO REAL */
-        <div className="w-full max-w-6xl bg-[#f2f5f4] rounded-3xl sm:rounded-4xl shadow-2xl border border-[#073b4c]/10 flex flex-col md:flex-row overflow-hidden min-h-[82vh] max-h-[88vh] relative transition-all duration-300">
+        <div className="w-full max-w-6xl bg-[#f2f5f4] rounded-3xl sm:rounded-4xl shadow-2xl border border-[#073b4c]/10 flex flex-col md:flex-row overflow-hidden h-[86vh] sm:h-[90vh] relative transition-all duration-300">
           
           {/* Sidebar Lateral (Visible en escritorio / pantallas medianas) */}
           <div className="hidden md:block">
