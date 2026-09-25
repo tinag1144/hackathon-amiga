@@ -7,9 +7,9 @@ export const INITIAL_ASSETS: IngestedAsset[] = [
     formato_origen: "Planilla de Cálculo (XLSX/CSV)",
     fuente_informacion: "Proveedor / Mayorista",
     tipo_economico: "Precio de Compra/Venta",
-    upload_timestamp: "Hoy, 08:30",
+    upload_timestamp: "Hoy, 08:30 hs",
     file_size_bytes: 4820,
-    raw_preview: "Producto,Categoria,PrecioUnidad,Presentacion\nHarina 000,Secos,14200,Bolsa 25kg..."
+    raw_preview: "Producto,Categoria,PrecioUnidad,Presentacion,Vigencia\nHarina 000,Secos,14200,Bolsa 25kg,2026-09-20\nAceite Girasol 1.5L,Aceites,1850,Botella,2026-09-20\nAzucar Comun 1kg,Secos,920,Paquete,2026-09-20"
   },
   {
     id: "AST-8913",
@@ -17,9 +17,9 @@ export const INITIAL_ASSETS: IngestedAsset[] = [
     formato_origen: "Planilla de Cálculo (XLSX/CSV)",
     fuente_informacion: "Cliente / Fiados",
     tipo_economico: "Venta",
-    upload_timestamp: "Ayer, 19:15",
+    upload_timestamp: "Ayer, 19:15 hs",
     file_size_bytes: 3120,
-    raw_preview: "Fecha,Cliente,Producto,Cantidad,PrecioCobrado\n2026-09-21,Doña Rosa,Harina 000,12500..."
+    raw_preview: "Fecha,Cliente,Producto,Cantidad,PrecioCobrado,Estado\n2026-09-21,Doña Rosa (Fiado),Harina 000 25kg,1,12500,Pendiente\n2026-09-21,Juan Carlos,Aceite Girasol 1.5L,2,1900,Pagado\n2026-09-22,Don Pedro (Fiado),Yerba Mate 1kg,1,3200,Pendiente"
   },
   {
     id: "AST-8914",
@@ -29,7 +29,17 @@ export const INITIAL_ASSETS: IngestedAsset[] = [
     tipo_economico: "Precio de Compra/Venta",
     upload_timestamp: "Hace 2 días",
     file_size_bytes: 840,
-    raw_preview: "Hola Don Marcelo! Le aviso por acá que a partir del lunes aumenta 18% la harina..."
+    raw_preview: "Hola Don Marcelo! Le aviso por acá que a partir del lunes aumenta 18% la harina y derivados por el costo de flete desde Resistencia. Los lácteos se mantienen hasta el 30."
+  },
+  {
+    id: "AST-8915",
+    filename: "Circular_Normativa_Direccion_Comercio.txt",
+    formato_origen: "Texto (TXT/DOC/MD)",
+    fuente_informacion: "Organismo Público (AFIP/Comercio)",
+    tipo_economico: "Impuesto / Tasa",
+    upload_timestamp: "Hace 4 días",
+    file_size_bytes: 1250,
+    raw_preview: "DIRECCIÓN DE COMERCIO DE FORMOSA - RESOLUCIÓN 402/2026: Se extiende la prórroga para la actualización del registro provincial de comercios minoristas de barrio..."
   }
 ];
 
@@ -43,7 +53,7 @@ export const INITIAL_AUDITS: AuditDiagnostic[] = [
     valores_anomalos_aislados: [],
     vigencia_dias: 5,
     alerta_obsolescencia: false,
-    observaciones: "Se auditaron 34 registros de precios. Se imputaron 2 celdas vacías con el precio típico."
+    observaciones: "34 ítems auditados. Se completaron 2 celdas de precio nulas con el valor típico mayorista de la zona."
   },
   {
     asset_id: "AST-8913",
@@ -51,40 +61,65 @@ export const INITIAL_AUDITS: AuditDiagnostic[] = [
     registros_totales: 18,
     faltantes_detectados: 0,
     faltantes_imputados: 0,
-    valores_anomalos_aislados: ["Línea 4: Precio cobrado de $12,500 en Harina 25kg resulta inferior al costo mayorista ($14,200)"],
+    valores_anomalos_aislados: ["Línea 1: Precio cobrado de $12,500 por Harina 25kg resulta inferior al costo mayorista ($14,200). Genera margen negativo."],
     vigencia_dias: 2,
     alerta_obsolescencia: false,
-    observaciones: "Se detectó 1 registro con venta a pérdida (margen negativo)."
+    observaciones: "Se aisló 1 registro crítico de venta por debajo del costo."
+  },
+  {
+    asset_id: "AST-8914",
+    filename: "Lista_Precios_Bebidas_Agosto.pdf",
+    registros_totales: 42,
+    faltantes_detectados: 0,
+    faltantes_imputados: 0,
+    valores_anomalos_aislados: [],
+    vigencia_dias: 38,
+    alerta_obsolescencia: true,
+    observaciones: "El documento tiene 38 días de antigüedad. En el contexto inflacionario local se considera obsoleto."
   }
 ];
 
 export const INITIAL_DECISIONS: PrescriptiveDecision[] = [
   {
     id: "DEC-1049",
-    titulo: "Venta de Harina a Pérdida en Mostrador",
+    titulo: "Venta de Harina 000 a Pérdida en Cuaderno de Fiados",
     nivel_alerta: "RIESGO_CRITICO",
-    descripcion_panorama: "Laya detectó que estás vendiendo la Harina 000 (25kg) a $12,500 en el cuaderno de fiados, pero la Distribuidora El Sol la facturó a $14,200 en la lista nueva. Pierdes $1,700 por bolsa.",
-    recomendacion_practica: "Actualizar el precio en el cuaderno a $14,800/unidad o consultar con Distribuidora Formosa Co. por volumen.",
+    descripcion_panorama: "Laya detectó que en el cuaderno de ventas estás cobrando la bolsa de Harina 000 (25kg) a $12,500, pero la Distribuidora El Sol la facturó a $14,200 en la lista nueva. Pierdes $1,700 por bolsa vendida.",
+    recomendacion_practica: "Actualizar el precio en mostrador a $14,800/unidad o consultar con Distribuidora Formosa Co. que ofrece la misma marca con 8% de descuento por pago contado.",
     responsable_accion: "Propietario / Encargado de Caja",
     evidencia_fundamentacion: [
-      "Lista_Precios_Distribuidora_El_Sol.csv: Harina 25kg = $14,200",
-      "Cuaderno_Ventas_Septiembre.csv: Harina 25kg = $12,500"
+      "Lista_Precios_Distribuidora_El_Sol.csv: Harina 000 25kg = $14,200",
+      "Cuaderno_Ventas_Septiembre.csv: Harina fraccionada = $12,500",
+      "Nota_WhatsApp_Proveedor.txt: 'Aumento del 18% en harina por flete'"
     ],
     archivos_citados: ["Lista_Precios_Distribuidora_El_Sol.csv", "Cuaderno_Ventas_Septiembre.csv"],
-    impacto_estimado: "Evita perder $34,000 en el stock restante del mes."
+    impacto_estimado: "Recuperación de $34,000 en el margen semanal del negocio."
   },
   {
     id: "DEC-1050",
     titulo: "Lista de Precios de Bebidas sin Actualizar (>35 días)",
     nivel_alerta: "ADVERTENCIA",
-    descripcion_panorama: "El catálogo de 'La Formoseña' tiene más de 35 días de vigencia. Podrías estar presupuestando con precios obsoletos.",
-    recomendacion_practica: "Solicitar por WhatsApp la lista semanal actualizada al preventista antes de armar la orden.",
+    descripcion_panorama: "El catálogo del distribuidor de gaseosas y bebidas 'La Formoseña' supera los 35 días de vigencia. Presupuestar con estos precios generará descalce de caja al reposicionar stock.",
+    recomendacion_practica: "Solicitar la lista de precios semanal actualizada al preventista por WhatsApp antes de emitir el próximo pedido.",
     responsable_accion: "Encargado de Compras",
     evidencia_fundamentacion: [
-      "Lista_Precios_Bebidas_Agosto.pdf: Fecha de emisión 18/08"
+      "Lista_Precios_Bebidas_Agosto.pdf: Fecha de emisión 18 de agosto (>35 días)"
     ],
     archivos_citados: ["Lista_Precios_Bebidas_Agosto.pdf"],
     impacto_estimado: "Evita descalce presupuestario del 12% en la entrega."
+  },
+  {
+    id: "DEC-1051",
+    titulo: "Prórroga del Registro Provincial de Comercio Minorista",
+    nivel_alerta: "NORMAL",
+    descripcion_panorama: "La Dirección de Comercio de Formosa extendió el plazo para la actualización de datos de comercios de barrio del régimen simplificado.",
+    recomendacion_practica: "Enviar copia digital de la circular al contador para tenerla presente en la liquidación mensual.",
+    responsable_accion: "Contador / Asesor Externo",
+    evidencia_fundamentacion: [
+      "Circular_Normativa_Direccion_Comercio.txt: Resolución 402/2026"
+    ],
+    archivos_citados: ["Circular_Normativa_Direccion_Comercio.txt"],
+    impacto_estimado: "Mantiene el comercio 100% al día sin multas administrativas."
   }
 ];
 
@@ -92,7 +127,7 @@ export const INITIAL_CHAT: ChatMessage[] = [
   {
     id: "MSG-1",
     sender: "laya",
-    text: "¡Hola Marcelo! Soy Laya, tu copiloto en AMIGA. Revisé tus archivos subidos y detecté que el costo de la harina subió un 18.5%. ¿Querés que revisemos qué productos te quedaron desactualizados?",
-    timestamp: "09:00"
+    text: "¡Hola Marcelo! Soy Laya, tu copiloto en AMIGA. Analicé tus listas de mayoristas, notas de WhatsApp y cuaderno de fiados. En general tu negocio está marchando bien, pero detecté 1 producto vendido por debajo del costo. ¿Querés que lo revisemos?",
+    timestamp: "08:35"
   }
 ];
