@@ -24,12 +24,8 @@ export const App: React.FC = () => {
   const [processingFileName, setProcessingFileName] = useState<string | null>(null);
 
   const handleUpload = async (file: File) => {
-    // 1. Inicia el razonamiento automático de 5 fases en pantalla
     setProcessingFileName(file.name);
-    
-    // 2. Procesa el archivo en vivo generando Asset, Auditoría y Decisión Prescriptiva
     const result = await ApiService.processFileUpload(file);
-    
     setAssets(prev => [result.asset, ...prev]);
     setAudits(prev => [result.audit, ...prev]);
     if (result.decision) {
@@ -39,7 +35,6 @@ export const App: React.FC = () => {
 
   const handlePipelineComplete = () => {
     setProcessingFileName(null);
-    // Cambia automáticamente a la vista de decisiones prescriptivas al finalizar el razonamiento en vivo
     setActiveTab('decisiones');
   };
 
@@ -47,7 +42,7 @@ export const App: React.FC = () => {
     <MobileContainer>
       <TopHeader />
 
-      <main className="flex-1 px-3 sm:px-4 pt-3 overflow-y-auto">
+      <main className={`flex-1 px-3 sm:px-4 pt-2 ${activeTab === 'chat' ? 'overflow-hidden flex flex-col relative' : 'overflow-y-auto'}`}>
         {activeTab === 'ingesta' && (
           <FileUploader assets={assets} onUpload={handleUpload} />
         )}
