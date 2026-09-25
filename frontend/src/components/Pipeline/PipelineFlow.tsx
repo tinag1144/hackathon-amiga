@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { UploadCloud, ShieldCheck, FileCode, Sparkles, CheckCircle2, ArrowRight, Play } from 'lucide-react';
+import { UploadCloud, ShieldCheck, FileCode, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 import { IngestedAsset, AuditDiagnostic, PrescriptiveDecision } from '../../types';
 
 interface PipelineFlowProps {
   assets: IngestedAsset[];
   audits: AuditDiagnostic[];
   decisions: PrescriptiveDecision[];
-  onRunDemoPipeline?: () => void;
 }
 
-export const PipelineFlow: React.FC<PipelineFlowProps> = ({ assets, audits, decisions, onRunDemoPipeline }) => {
+export const PipelineFlow: React.FC<PipelineFlowProps> = ({ assets, audits, decisions }) => {
   const [activeStep, setActiveStep] = useState<number>(1);
 
   const steps = [
@@ -63,28 +62,16 @@ export const PipelineFlow: React.FC<PipelineFlowProps> = ({ assets, audits, deci
   return (
     <div className="space-y-4 pb-20">
       {/* Header Visual del Pipeline */}
-      <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-editorial border border-[#073b4c]/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div>
-          <span className="inline-block px-2.5 py-0.5 bg-[#118ab2]/15 text-[#118ab2] text-[10px] font-bold rounded-full mb-1.5">
-            Arquitectura del Motor • Pipeline de 5 Fases
-          </span>
-          <h2 className="text-base sm:text-lg font-bold text-[#073b4c] tracking-tight">
-            Flujo de Procesamiento del Motor
-          </h2>
-          <p className="text-[11px] sm:text-xs text-[#073b4c]/70 leading-relaxed">
-            Visualizá cómo AMIGA y Laya AI transforman archivos desestructurados en decisiones prescriptivas.
-          </p>
-        </div>
-
-        {onRunDemoPipeline && (
-          <button
-            onClick={onRunDemoPipeline}
-            className="shrink-0 px-3.5 py-2 bg-[#118ab2] hover:bg-[#073b4c] text-white font-bold text-xs rounded-2xl transition-all shadow-sm flex items-center justify-center gap-1.5"
-          >
-            <Play className="w-3.5 h-3.5 fill-white" />
-            <span>Simular Flujo Completo</span>
-          </button>
-        )}
+      <div className="bg-white rounded-3xl p-4 sm:p-5 shadow-editorial border border-[#073b4c]/5">
+        <span className="inline-block px-2.5 py-0.5 bg-[#118ab2]/15 text-[#118ab2] text-[10px] font-bold rounded-full mb-1.5">
+          Arquitectura del Motor • Pipeline de 5 Fases
+        </span>
+        <h2 className="text-base sm:text-lg font-bold text-[#073b4c] tracking-tight">
+          Flujo de Procesamiento del Motor
+        </h2>
+        <p className="text-[11px] sm:text-xs text-[#073b4c]/70 leading-relaxed">
+          Visualizá cómo AMIGA y Laya AI transforman archivos desestructurados en decisiones prescriptivas al momento de ser cargados.
+        </p>
       </div>
 
       {/* Stepper Horizontal Interactivo (Fases 1 a 5) */}

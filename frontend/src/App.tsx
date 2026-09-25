@@ -64,7 +64,7 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Modal de Razonamiento en Vivo de las 5 Fases (Automático al Subir Archivo) */}
+      {/* Modal de Razonamiento en Vivo de las 5 Fases (Automático al Subir Cualquier Archivo) */}
       {processingFileName && (
         <AutomatedPipelineModal
           filename={processingFileName}
