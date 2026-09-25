@@ -10,31 +10,36 @@ import { DecisionFeed } from './components/Decisions/DecisionFeed';
 import { CopilotChat } from './components/Chat/CopilotChat';
 
 import { INITIAL_ASSETS, INITIAL_AUDITS, INITIAL_DECISIONS, INITIAL_CHAT } from './mock/mockData';
-import { IngestedAsset, ChatMessage } from './types';
+import { IngestedAsset, AuditDiagnostic, PrescriptiveDecision, ChatMessage } from './types';
 import { ApiService } from './services/api';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTab>('ingesta');
   const [assets, setAssets] = useState<IngestedAsset[]>(INITIAL_ASSETS);
-  const [audits] = useState(INITIAL_AUDITS);
-  const [decisions] = useState(INITIAL_DECISIONS);
+  const [audits, setAudits] = useState<AuditDiagnostic[]>(INITIAL_AUDITS);
+  const [decisions, setDecisions] = useState<PrescriptiveDecision[]>(INITIAL_DECISIONS);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_CHAT);
   
-  // Estado para la animación automática del pipeline de 5 fases
+  // Estado para la animación automática del pipeline de 5 fases al cargar un archivo
   const [processingFileName, setProcessingFileName] = useState<string | null>(null);
 
   const handleUpload = async (file: File) => {
-    // 1. Activa la animación en vivo del motor de 5 fases
+    // 1. Inicia el razonamiento automático de 5 fases en pantalla
     setProcessingFileName(file.name);
     
-    // 2. Procesa la ingesta
-    const newAsset = await ApiService.uploadFile(file);
-    setAssets(prev => [newAsset, ...prev]);
+    // 2. Procesa el archivo en vivo generando Asset, Auditoría y Decisión Prescriptiva
+    const result = await ApiService.processFileUpload(file);
+    
+    setAssets(prev => [result.asset, ...prev]);
+    setAudits(prev => [result.audit, ...prev]);
+    if (result.decision) {
+      setDecisions(prev => [result.decision!, ...prev]);
+    }
   };
 
   const handlePipelineComplete = () => {
     setProcessingFileName(null);
-    // Cambia automáticamente a las decisiones prescriptivas al finalizar el razonamiento
+    // Cambia automáticamente a la vista de decisiones prescriptivas al finalizar el razonamiento en vivo
     setActiveTab('decisiones');
   };
 
@@ -64,7 +69,7 @@ export const App: React.FC = () => {
         )}
       </main>
 
-      {/* Modal de Razonamiento en Vivo de las 5 Fases (Automático al Subir Cualquier Archivo) */}
+      {/* Modal de Razonamiento en Vivo de las 5 Fases (Automático al Subir Archivo Externo) */}
       {processingFileName && (
         <AutomatedPipelineModal
           filename={processingFileName}
