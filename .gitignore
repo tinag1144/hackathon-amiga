@@ -13,6 +13,9 @@ dist/
 dist-ssr/
 *.local
 
+# Presentation (Archivos locales de presentación)
+presentacion/
+
 # IDE & OS
 .DS_Store
 Thumbs.db

@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Any
 
+from app.config import settings
 from app.models.schemas import (
     IngestedAsset, AuditDiagnostic, SynthesizedData,
     PrescriptiveDecision, ChatQuery, ChatResponse
@@ -25,6 +26,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Registro Modular de n8n (Feature Flag)
+if settings.ENABLE_N8N_WEBHOOK:
+    from app.routers.n8n_router import n8n_router
+    app.include_router(n8n_router, prefix="/api/webhook", tags=["n8n"])
+
 # Estado en memoria para demostración del hackatón
 stored_assets: List[IngestedAsset] = []
 stored_diagnostics: List[AuditDiagnostic] = []
@@ -35,6 +41,7 @@ def read_root():
     return {
         "app": "AMIGA - Análisis y Manejo de Información para la Gestión Autónoma",
         "engine": "Modelo Laya AI Engine",
+        "n8n_webhook_enabled": settings.ENABLE_N8N_WEBHOOK,
         "status": "Online",
         "version": "1.0.0"
     }
